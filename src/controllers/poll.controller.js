@@ -6,10 +6,10 @@ import dayjs from "dayjs";
 export async function setpoll(req, res) {
   const poll = req.body;
   try {
-    if (!poll?.expiredAt) {
+    if (!poll?.expireAt) {
       await dbPoll.insertOne({
         title: req.body.title,
-        expiredAt: dayjs(Date.now() + 2.592e9).format("YYYY-MM-DD HH:mm"),
+        expireAt: dayjs(Date.now() + 2.592e9).format("YYYY-MM-DD HH:mm"),
       });
       return res.sendStatus(201);
     } else {
@@ -28,7 +28,7 @@ export async function getpoll(req, res) {
 
     res.send(poll);
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res.sendStatus(500);
   }
 }
