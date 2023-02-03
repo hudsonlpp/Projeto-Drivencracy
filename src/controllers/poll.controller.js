@@ -40,7 +40,7 @@ export async function getChoiceOptions(req, res) {
     const listChoice = await dbChoice.find({ pollId: id }).toArray();
 
     if (listChoice.length === 0) {
-      return res.status(404).send("Enquete não encontrada");
+      return res.status(404).send("poll not found");
     }
 
     res.send(listChoice);

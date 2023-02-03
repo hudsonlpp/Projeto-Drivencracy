@@ -14,19 +14,19 @@ export async function setChoice(req, res) {
     const searchpoll = await dbPoll.findOne({ _id: new ObjectId(choice.pollId) });
 
     if(!searchpoll) {
-      return res.status(404).send("Enquete não existente");
+      return res.status(404).send("the poll does not exist");
     }
     const expiredDate = searchpoll.expiredAt
 
     const isExpired = dayjs().isAfter(expiredDate, "days");
     if(isExpired) {
-      return res.status(403).send("Enquete expirada")
+      return res.status(403).send("poll expired")
     }
 
     const searchChoice = await dbChoice.findOne({ title: choice.title });
 
     if(searchChoice) {
-      return res.status(409).send("Opção de voto já existente");
+      return res.status(409).send("voting option not available");
     }
 
     await dbChoice.insertOne(choice);
@@ -49,7 +49,7 @@ export async function setVote(req, res) {
     const isChoice = await dbChoice.findOne({ _id: new ObjectId(id)} );
 
     if(!isChoice) {
-      return res.status(404).send("Opção de voto não existente")
+      return res.status(404).send("voting option not available")
     }
 
     const searchpoll = await dbPoll.findOne({ _id: new ObjectId(isChoice.pollId) });
@@ -58,7 +58,7 @@ export async function setVote(req, res) {
 
     const isExpired = dayjs().isAfter(expiredDate, "days");
     if(isExpired) {
-      return res.status(403).send("Enquete expirada")
+      return res.status(403).send("poll expired")
     }
 
     await db.collection("vote").insertOne(vote);

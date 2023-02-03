@@ -16,7 +16,7 @@ app.use(express.json());
 
 // ROTAS:
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 app.use(choiceRouter);
 app.use(pollRouter);
 app.listen(port, () => console.log(`Server running in port: ${port}`));
