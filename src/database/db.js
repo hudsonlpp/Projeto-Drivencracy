@@ -16,4 +16,5 @@ console.log("Erro no mongo.conect", err.message);
 
 export const dbPoll = db.collection("poll");
 export const dbChoice = db.collection("choice");
+export default db
 
